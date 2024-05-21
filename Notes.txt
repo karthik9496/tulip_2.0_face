@@ -1,0 +1,71 @@
+INSTALLATION
+----------------------------------------
+1. create-react-app --verbose
+2. yarn add react-router-dom graphql @apollo/client axios @heroicons/react 
+react-table react-hook-form react-bootstrap@next bootstrap@5.1.1 yup 
+@hookform/resolvers typescript @testing-library/dom react-datepicker 
+@popperjs/core react-async-hook awesome-debounce-promise use-constant
+
+3. yarn add -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9
+yarn add @craco/craco
+// Modify package.json
+  {
+    // ...
+    "scripts": {
+     "start": "react-scripts start",
+     "build": "react-scripts build",
+     "test": "react-scripts test",
+     "start": "craco start",
+     "build": "craco build",
+     "test": "craco test",
+     "eject": "react-scripts eject"
+    },
+  }
+  
+ //Create craco.config.js
+module.exports = {
+  style: {
+    postcss: {
+      plugins: [
+        require('tailwindcss'),
+        require('autoprefixer'),
+      ],
+    },
+  },
+}
+
+npx tailwindcss-cli@latest init
+
+ //Modify tailwind.config.js
+  module.exports = {
+
+   purge: [],
+
+   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+      extend: {},
+    },
+    variants: {
+      extend: {},
+    },
+    plugins: [],
+  }
+  
+/* Modify ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+-------------------------------------------------
+Export keys from KSE and run the following to extract private key without password
+openssl rsa -in keysFromKSE.pem -out key2.pem
+
+
+
+
+
+
+
+
+

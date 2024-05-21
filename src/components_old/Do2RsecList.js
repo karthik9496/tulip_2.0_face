@@ -1,0 +1,292 @@
+/**
+ * Code generated using Python
+ * @author Raja Reddy
+ * Date : 17 Oct 2021
+ *
+ * Modified By : 
+ */
+
+import { useState, useEffect, useMemo } from 'react';
+import Table, { SelectColumnFilter } from '../utils/Table'  // 
+import axios from "axios";
+import { format } from 'date-fns'
+import { withRouter, Link } from "react-router-dom";
+
+function Do2RsecList() {
+
+	const [data, setData] = useState([]);
+	const [update, setUpdate] = useState(false);
+	const [serverErrors, setServerErrors] = useState([]);
+	const [search, setSearch] = useState("");
+	const [inputText, setInputText] = useState('');
+	const [desc,setDesc]=useState('');
+
+	useEffect(() => {
+		let fetching = false;
+		async function fetchData() {
+			if(!fetching)
+			await axios.get('/do2s/rsec/do2List?cdaoNo='+search+'&desc='+desc)
+				.then((response) => {
+					if(response.data)
+					setData(response.data);
+				})
+				.catch((error) => {
+					//console.log(error);
+					//console.log(error.response.status);
+					//console.log(error.response.headers);
+					if (error.response)
+						setServerErrors(error.response.data.error);
+					else
+						setServerErrors(error.Error);
+				})
+		}
+		fetchData();
+		return () => { fetching = true; }
+
+	}, [update, search,desc]);
+
+
+	async function remove(id) {
+		await axios.delete(`/do2s/${id}`)
+			.then(() => {
+				//console.log(data);
+				let updatedRecords = [...data].filter((i) => i.id !== id);
+				console.log(updatedRecords);
+				setData(updatedRecords);
+				setUpdate(!update);
+			})
+			.catch((error) => {
+				console.log(error);
+				//console.log(error.response.status);
+				//console.log(error.response.headers);
+				if (error.response)
+					setServerErrors(error.response.data.error);
+				else
+					setServerErrors(error.Error);
+			});
+	}
+
+
+	const columns = useMemo(() => [
+		{
+			Header: 'Action',
+			Cell: ({ row }) => (
+				 
+					<div>
+					{row.original.status && row.original.status!=='V' &&
+					<Link to={"/do2s/rsec/do2edit/" + row.original.id}>
+						<button className=" w-16 m-0 p-0 " > Edit </button>
+					</Link>
+					}
+				</div>
+			)
+		},
+		
+		{
+			Header: "Dak",
+			accessor: 'dak.dakidNo',
+		},
+		{
+			Header: 'Officer',
+			accessor: 'officerName',
+			Cell: ({ row }) => (
+				<div>
+					<label>{row.original.employee.officerName}{'/'}{row.original.employee.rank.rankName}</label><br/>
+ 				</div>
+			)
+		},
+		{
+			Header: 'CDAO No',
+			accessor: 'cdaoNo',
+			Cell: ({ row }) => (
+				<div>
+				
+					<label>{row.original.cdaoNo}{row.original.checkDigit}</label><br/>
+				</div>
+			)
+		},
+		
+		 
+		 
+		 
+		{
+			Header: "Occurrence Code",
+			accessor: 'occurrenceCode',
+		},
+		
+		{
+			Header: "From Date",
+			accessor: 'fromDate',
+				Cell: ({ row }) => (
+				<div>
+				<div>
+				 {row.original.fromDate!==null && format(new Date(row.original.fromDate.toString()),'dd/MM/yyyy')} 
+				 </div>
+				   
+				</div>
+				
+				)
+			
+		},
+		 
+		{
+			Header: "To Date",
+			accessor: 'toDate',
+				Cell: ({ row }) => (
+				<div>
+				<div>
+				 {row.original.toDate!==null && format(new Date(row.original.toDate.toString()),'dd/MM/yyyy')} 
+				 </div>
+				   
+				</div>
+				
+				)
+			
+		},
+		{
+			Header: "Do2 No",
+			accessor: 'do2No',
+		},
+		
+		{
+			Header: "SlNo",
+			accessor: 'do2ItemNo',
+		},
+		{
+			Header: "Do2 Date",
+			accessor: 'do2Date',
+				Cell: ({ row }) => (
+				<div>
+				<div>
+				 {row.original.do2Date!==null && format(new Date(row.original.do2Date.toString()),'dd/MM/yyyy')} 
+				 </div>
+				   
+				</div>
+				
+				)
+			
+		},
+		
+	 
+		
+		
+		
+		
+		
+		{
+			Header: "Data1",
+			accessor: 'data1',
+		},
+		
+		{
+			Header: "Data2",
+			accessor: 'data2',
+		},
+		
+		{
+			Header: "Data3",
+			accessor: 'data3',
+		},
+		
+		{
+			Header: "Data4",
+			accessor: 'data4',
+		},
+		
+		
+		
+		
+		
+		 
+		
+		{
+			Header: "Transcription Type",
+			accessor: 'transcriptionType',
+		},
+		
+		 
+		
+		{
+			Header: "Input Month Ending",
+			accessor: 'inputMonthEnding',
+		},
+		 
+		
+		
+		 
+		{
+			Header: "Status",
+			accessor: 'status',
+		},
+		
+		 
+		
+		 
+		
+		{
+			Header: "Reason",
+			accessor: 'reason',
+		},
+		
+		
+		
+		
+		/*
+		{
+			Header: "Login Name",
+			accessor: 'loginName',
+			Filter: SelectColumnFilter,  // new
+			filter: 'includes',
+		},
+		*/
+	], [data])
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		console.log(inputText);
+		setSearch(inputText);
+	}
+
+	const handleKeyPress = (event) => {
+		// look for the `Enter` keyCode
+		if (event.keyCode === 13 || event.which === 13) {
+			handleSubmit(event)
+		}
+	}
+
+	return (
+		<div className="min-h-screen bg-gray-100 text-gray-900">
+			<main className="max-w-11/12xl mx-auto px-4 sm:px-6 lg:px-8 pt-0">
+				<div className="mt-2 ml-4">
+					<h1 className="text-xl font-semibold">Do2s</h1>
+					<div className="flexContainer">
+					<div>
+						<input type="text" name="search" 
+						onChange={e => setInputText(e.target.value)}
+							onKeyPress={handleKeyPress} placeholder="cdao no"
+							className="pl-2 -ml-2 inputField flex-initial" />
+							</div>
+							<div>
+						<input type="text" name="desc" 
+						onChange={e => setDesc(e.target.value)}
+							onKeyPress={handleKeyPress} placeholder="desc"
+							className="pl-2 -ml-2 inputField flex-initial" />
+							</div>
+						<button type="submit" onClick={handleSubmit} className="w-16 m-0 p-0">Search</button>
+						<div>
+							<Link to={"/do2s/rsec/do2edit/new"}>
+								<button className=" w-32 ml-8 p-0 h-6 -mt-2" > Add Do2 </button>
+							</Link>
+						</div>
+					</div>					
+				</div>
+				<div className="-mt-2 max-h-1 py-0">
+					<Table columns={columns} data={data} className="table-auto" />
+				</div>
+			</main>
+		</div>
+	);
+}
+
+export default withRouter(Do2RsecList);
+

@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7dad4d2e.chunk.css",
+    "main.js": "/static/js/main.8a9b2a04.chunk.js",
+    "main.js.map": "/static/js/main.8a9b2a04.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b0a854c0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b0a854c0.js.map",
+    "static/css/2.15ecf917.chunk.css": "/static/css/2.15ecf917.chunk.css",
+    "static/js/2.1f197f50.chunk.js": "/static/js/2.1f197f50.chunk.js",
+    "static/js/2.1f197f50.chunk.js.map": "/static/js/2.1f197f50.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.15ecf917.chunk.css.map": "/static/css/2.15ecf917.chunk.css.map",
+    "static/css/main.7dad4d2e.chunk.css.map": "/static/css/main.7dad4d2e.chunk.css.map",
+    "static/js/2.1f197f50.chunk.js.LICENSE.txt": "/static/js/2.1f197f50.chunk.js.LICENSE.txt",
+    "static/media/CmpRejectionManual.f43aa113.pdf": "/static/media/CmpRejectionManual.f43aa113.pdf",
+    "static/media/MessageTrigger.31d6cfe0.bin": "/static/media/MessageTrigger.31d6cfe0.bin",
+    "static/media/TravelRule.d6f41f2c.pdf": "/static/media/TravelRule.d6f41f2c.pdf",
+    "static/media/UserManual.b62ca85b.pdf": "/static/media/UserManual.b62ca85b.pdf",
+    "static/media/hny2.f602c003.jpg": "/static/media/hny2.f602c003.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b0a854c0.js",
+    "static/css/2.15ecf917.chunk.css",
+    "static/js/2.1f197f50.chunk.js",
+    "static/css/main.7dad4d2e.chunk.css",
+    "static/js/main.8a9b2a04.chunk.js"
+  ]
+}
